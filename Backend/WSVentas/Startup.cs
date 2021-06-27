@@ -31,6 +31,7 @@ namespace WSVentas
                 options.AddPolicy(name: MyCors,
                                     builder =>
                                     {
+                                        builder.WithHeaders("*");
                                         builder.WithOrigins("*");
                                     });
             });

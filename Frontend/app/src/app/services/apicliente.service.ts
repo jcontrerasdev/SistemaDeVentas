@@ -27,5 +27,11 @@ export class ApiclienteService {
   add(cliente:Cliente):Observable<Response>{
     return this._http.post<Response>(this.url, cliente, httpOptions);
   }
+  edit(cliente:Cliente):Observable<Response>{
+    return this._http.put<Response>(this.url, cliente, httpOptions);
+  }
+  delete(id:number):Observable<Response>{
+    return this._http.delete<Response>(`${this.url}/${id}`);
+  }
 }
 

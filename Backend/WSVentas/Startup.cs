@@ -33,6 +33,7 @@ namespace WSVentas
                                     {
                                         builder.WithHeaders("*");
                                         builder.WithOrigins("*");
+                                        builder.WithMethods("*");
                                     });
             });
             services.AddControllers();

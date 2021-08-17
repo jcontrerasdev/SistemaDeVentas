@@ -15,13 +15,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DialogClienteComponent } from './cliente/dialog/dialogcliente.component';
 import { FormsModule } from '@angular/forms';
+import { DialogDeleteComponent } from './common/delete/dialogdelete.components';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ClienteComponent,
-    DialogClienteComponent
+    DialogClienteComponent,
+    DialogDeleteComponent,
   ],
   imports: [
     BrowserModule,

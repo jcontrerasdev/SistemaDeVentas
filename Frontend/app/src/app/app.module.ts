@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import {HttpClientModule } from '@angular/common/http';
 import { MatTableModule} from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -16,6 +17,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DialogClienteComponent } from './cliente/dialog/dialogcliente.component';
 import { FormsModule } from '@angular/forms';
 import { DialogDeleteComponent } from './common/delete/dialogdelete.components';
+import { AuthGuard } from './security/auth.guard';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,7 @@ import { DialogDeleteComponent } from './common/delete/dialogdelete.components';
     ClienteComponent,
     DialogClienteComponent,
     DialogDeleteComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,9 +40,12 @@ import { DialogDeleteComponent } from './common/delete/dialogdelete.components';
     MatButtonModule,
     MatInputModule,
     MatSnackBarModule,
+    MatCardModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

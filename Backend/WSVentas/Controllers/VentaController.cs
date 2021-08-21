@@ -24,27 +24,38 @@ namespace WSVentas.Controllers
             {
                 using (VentaRealContext db = new VentaRealContext())
                 {
-                    var venta = new Ventum();
-                    venta.Total = model.Total;
-                    venta.Fecha = DateTime.Now;
-                    venta.IdCliente = model.IdCliente;
-                    db.Venta.Add(venta);
-                    db.SaveChanges();
-
-                    foreach (var concepto in model.Conceptos)
+                    using (var transaction = db.Database.BeginTransaction())
                     {
-                        var newConcepto = new Models.Concepto()
+                        try
                         {
-                            Cantidad = concepto.Cantidad,
-                            IdProducto = concepto.IdProducto,
-                            Importe = concepto.Importe,
-                            PrecioUnitario = concepto.PrecioUnitario,
-                            IdVenta = venta.Id,
-                        };
-                        db.Conceptos.Add(newConcepto);
+                            var venta = new Ventum();
+                            venta.Total = model.Conceptos.Sum(d => d.Cantidad * d.PrecioUnitario);
+                            venta.Fecha = DateTime.Now;
+                            venta.IdCliente = model.IdCliente;
+                            db.Venta.Add(venta);
+                            db.SaveChanges();
+
+                            foreach (var concepto in model.Conceptos)
+                            {
+                                var newConcepto = new Models.Concepto()
+                                {
+                                    Cantidad = concepto.Cantidad,
+                                    IdProducto = concepto.IdProducto,
+                                    Importe = concepto.Importe,
+                                    PrecioUnitario = concepto.PrecioUnitario,
+                                    IdVenta = venta.Id,
+                                };
+                                db.Conceptos.Add(newConcepto);
+                            }
+                            db.SaveChanges();
+                            transaction.Commit();
+                            respuesta.Exito = 1;
+                        }
+                        catch (Exception)
+                        {
+                            transaction.Rollback();
+                        }
                     }
-                    db.SaveChanges();
-                    respuesta.Exito = 1;
                 }
             }catch(Exception ex)
             {
